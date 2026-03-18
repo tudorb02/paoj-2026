@@ -155,10 +155,74 @@ package com.pao.laboratory03.bonus;
  */
 public class Main {
     public static void main(String[] args) {
-        // TODO: implementează toți cei 10 pași de mai sus
-        // Creează TOATE clasele necesare în acest pachet (bonus/)
-        // Nu ai subpachete impuse — organizează cum consideri
+        TaskService service = TaskService.getInstance();
+
+        System.out.println("=== Adăugare task-uri ===");
+        Task task1 = service.addTask("Fix login bug", Priority.CRITICAL);
+        Task task2 = service.addTask("Add dark mode", Priority.LOW);
+        Task task3 = service.addTask("Update docs", Priority.MEDIUM);
+        Task task4 = service.addTask("Fix memory leak", Priority.HIGH);
+        Task task5 = service.addTask("Refactor DB layer", Priority.HIGH);
+        System.out.println("Adăugat: " + task1);
+        System.out.println("Adăugat: " + task2);
+        System.out.println("Adăugat: " + task3);
+        System.out.println("Adăugat: " + task4);
+        System.out.println("Adăugat: " + task5);
+
+        System.out.println("\n=== Asignare ===");
+        service.assignTask(task1.getId(), "Ana");
+        service.assignTask(task3.getId(), "Mihai");
+        service.assignTask(task4.getId(), "Elena");
+        System.out.println(task1.getId() + " -> Ana");
+        System.out.println(task3.getId() + " -> Mihai");
+        System.out.println(task4.getId() + " -> Elena");
+
+        System.out.println("\n=== Schimbări status ===");
+        service.changeStatus(task1.getId(), Status.IN_PROGRESS);
+        System.out.println(task1.getId() + ": TODO -> IN_PROGRESS ✓");
+        service.changeStatus(task1.getId(), Status.DONE);
+        System.out.println(task1.getId() + ": IN_PROGRESS -> DONE ✓");
+        service.changeStatus(task3.getId(), Status.IN_PROGRESS);
+        System.out.println(task3.getId() + ": TODO -> IN_PROGRESS ✓");
+        try {
+            service.changeStatus(task1.getId(), Status.TODO);
+        } catch (InvalidTransitionException e) {
+            System.out.println(task1.getId() + ": DONE -> TODO -> InvalidTransitionException: " + e.getMessage());
+        }
+
+        System.out.println("\n=== Task-uri HIGH ===");
+        for (Task task : service.getTasksByPriority(Priority.HIGH)) {
+            System.out.println(task);
+        }
+
+        System.out.println("\n=== Sumar status ===");
+        for (Status status : Status.values()) {
+            System.out.println(status + ": " + service.getStatusSummary().get(status));
+        }
+
+        System.out.println("\n=== Task-uri neasignate ===");
+        for (Task task : service.getUnassignedTasks()) {
+            System.out.println(task.getId() + ": " + task.getTitle());
+        }
+
+        System.out.println("\n=== Scor urgență (baseDays=5) ===");
+        System.out.println("Total: " + service.getTotalUrgencyScore(5));
+
+        System.out.println("\n=== Audit Log ===");
+        service.printAuditLog();
+
+        System.out.println("\n=== Excepții ===");
+        try {
+            service.addTask(new Task(task1.getId(), "Duplicate id task", Priority.MEDIUM));
+        } catch (DuplicateTaskException e) {
+            System.out.println("DuplicateTaskException: " + e.getMessage());
+        }
+
+        try {
+            service.findTaskById("T999");
+        } catch (TaskNotFoundException e) {
+            System.out.println("TaskNotFoundException: " + e.getMessage());
+        }
     }
 }
-
 
