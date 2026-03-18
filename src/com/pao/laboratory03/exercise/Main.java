@@ -1,6 +1,12 @@
 package com.pao.laboratory03.exercise;
 
+import com.pao.laboratory03.exercise.model.Subject;
+import com.pao.laboratory03.exercise.service.StudentService;
+
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * Exercițiul 4 (Integrator) — Sistem de gestiune studenți + note
@@ -69,7 +75,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // TODO: obține instanța StudentService (Singleton)
+        StudentService service = StudentService.getInstance();
 
         System.out.println("=== Sistem Gestiune Studenți ===");
 
@@ -93,32 +99,43 @@ public class Main {
                         String name = scanner.nextLine().trim();
                         System.out.print("Vârsta: ");
                         int age = Integer.parseInt(scanner.nextLine().trim());
-                        // TODO: apelează service.addStudent(name, age)
+                        service.addStudent(name, age);
                         System.out.println("Student adăugat cu succes!");
                         break;
 
                     case "2":
                         System.out.print("Nume student: ");
                         String studentName = scanner.nextLine().trim();
-                        System.out.print("Materie (" + /* TODO: afișează Subject.values() */ "PAOJ, BD, SO, RC" + "): ");
+                        String availableSubjects = Arrays.stream(Subject.values())
+                                .map(Enum::name)
+                                .collect(Collectors.joining(", "));
+                        System.out.print("Materie (" + availableSubjects + "): ");
                         String subjectStr = scanner.nextLine().trim().toUpperCase();
                         System.out.print("Nota (1-10): ");
                         double grade = Double.parseDouble(scanner.nextLine().trim());
-                        // TODO: convertește subjectStr în Subject cu valueOf()
-                        // TODO: apelează service.addGrade(studentName, subject, grade)
+                        Subject subject = Subject.valueOf(subjectStr);
+                        service.addGrade(studentName, subject, grade);
                         System.out.println("Notă adăugată!");
                         break;
 
                     case "3":
-                        // TODO: apelează service.printAllStudents()
+                        service.printAllStudents();
                         break;
 
                     case "4":
-                        // TODO: apelează service.printTopStudents()
+                        service.printTopStudents();
                         break;
 
                     case "5":
-                        // TODO: apelează service.getAveragePerSubject() și afișează
+                        Map<Subject, Double> averagePerSubject = service.getAveragePerSubject();
+                        System.out.println("=== Media pe materie ===");
+                        if (averagePerSubject.isEmpty()) {
+                            System.out.println("Nu există note în sistem.");
+                        } else {
+                            for (Map.Entry<Subject, Double> entry : averagePerSubject.entrySet()) {
+                                System.out.printf("%s: %.2f%n", entry.getKey().name(), entry.getValue());
+                            }
+                        }
                         break;
 
                     case "0":
@@ -141,4 +158,3 @@ public class Main {
         scanner.close();
     }
 }
-
