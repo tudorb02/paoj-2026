@@ -4,6 +4,8 @@ import com.pao.laboratory03.exercise3.model.Manager;
 import com.pao.laboratory03.exercise3.model.Programator;
 import com.pao.laboratory03.exercise3.service.AngajatService;
 
+import java.util.Locale;
+
 /** Testează Programator, Manager, AngajatService. NU modifica. */
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ public class Main {
 
         System.out.println("\n=== Total salarii ===");
         double total = service.totalSalarii();
-        System.out.printf("Suma salariilor: %.2f RON%n", total);
+        System.out.printf(Locale.US, "Suma salariilor: %.2f RON%n", total);
 
         // Verificare automată
         System.out.println("\n=== VERIFICARE ===");

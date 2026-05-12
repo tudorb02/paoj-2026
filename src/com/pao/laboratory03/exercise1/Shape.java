@@ -1,5 +1,7 @@
 package com.pao.laboratory03.exercise1;
 
+import java.util.Locale;
+
 /** Clasă abstractă de bază. DATĂ — nu modifica. */
 public abstract class Shape {
     private String name;
@@ -12,7 +14,7 @@ public abstract class Shape {
 
     @Override
     public String toString() {
-        return name + " [area=" + String.format("%.2f", area()) +
-                ", perimeter=" + String.format("%.2f", perimeter()) + "]";
+        return name + " [area=" + String.format(Locale.US, "%.2f", area()) +
+                ", perimeter=" + String.format(Locale.US, "%.2f", perimeter()) + "]";
     }
 }

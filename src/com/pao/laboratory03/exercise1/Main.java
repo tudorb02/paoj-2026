@@ -1,5 +1,7 @@
 package com.pao.laboratory03.exercise1;
 
+import java.util.Locale;
+
 /** Testează Circle și Rectangle. NU modifica. Rulează după ce completezi TODO-urile. */
 public class Main {
     public static void main(String[] args) {
@@ -17,11 +19,11 @@ public class Main {
 
         System.out.println("\n=== Polimorfism — aceeași metodă, comportament diferit ===");
         for (Shape s : shapes)
-            System.out.printf("%-10s → aria = %.2f%n", s.getName(), s.area());
+            System.out.printf(Locale.US, "%-10s → aria = %.2f%n", s.getName(), s.area());
 
         System.out.println("\n=== Suma ariilor tuturor formelor ===");
         double totalArea = 0;
         for (Shape s : shapes) totalArea += s.area();
-        System.out.printf("Total arii: %.2f%n", totalArea);
+        System.out.printf(Locale.US, "Total arii: %.2f%n", totalArea);
     }
 }

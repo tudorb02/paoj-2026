@@ -1,5 +1,7 @@
 package com.pao.laboratory03.exercise3.model;
 
+import java.util.Locale;
+
 /** Clasă abstractă de bază pentru angajați. DATĂ — nu modifica. */
 public abstract class Angajat {
     private String name;
@@ -20,6 +22,6 @@ public abstract class Angajat {
     public String toString() {
         return getClass().getSimpleName() +
                 "{name='" + name + "', salariuBaza=" + salariuBaza +
-                ", salariuTotal=" + String.format("%.2f", salariuTotal()) + "}";
+                ", salariuTotal=" + String.format(Locale.US, "%.2f", salariuTotal()) + "}";
     }
 }
