@@ -10,5 +10,72 @@
         "classpath": [
             "lib/java-diff-utils-4.15.jar"
         ]
+    },
+    {
+        "type": "java",
+        "name": "Lab14 - Exercise1 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory14.exercise1.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab14 - Exercise1 Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory14.exercise1.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab14 - Exercise2 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory14.exercise2.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab14 - Exercise2 Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory14.exercise2.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab14 - Exercise3 Room Allocation Demo",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory14.exercise3.Main",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
     }
 ]
