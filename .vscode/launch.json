@@ -26,6 +26,47 @@
     },
     {
         "type": "java",
+        "name": "Lab13 - Exercise1 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory13.exercise1.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab13 - Exercise1 Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory13.exercise1.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab13 - Exercise2 Socket Demo",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory13.exercise2.Main",
+        "cwd": "${workspaceFolder}",
+        "args": "9013",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
         "name": "Lab14 - Exercise1 Main",
         "request": "launch",
         "mainClass": "com.pao.laboratory14.exercise1.Main",
