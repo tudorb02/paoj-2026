@@ -1,21 +1,130 @@
 [
     {
         "type": "java",
-        "name": "Launch Main",
+        "name": "Lab10 - Exercise1 Checker",
         "request": "launch",
+        "mainClass": "com.pao.laboratory10.exercise1.Checker",
+        "cwd": "${workspaceFolder}",
         "srcPaths": [
             "src"
         ],
-//        "mainClass": "com.pao.laboratory06.Test",
         "classpath": [
             "lib/java-diff-utils-4.15.jar"
         ]
     },
     {
         "type": "java",
-        "name": "Lab14 - Exercise1 Checker",
+        "name": "Lab10 - Exercise1 Main",
         "request": "launch",
-        "mainClass": "com.pao.laboratory14.exercise1.Checker",
+        "mainClass": "com.pao.laboratory10.exercise1.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab10 - Exercise2 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory10.exercise2.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab10 - Exercise2 Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory10.exercise2.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab10 - Exercise3 Stream Demo",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory10.exercise3.Main",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab11 - Exercise1 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory11.exercise1.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab11 - Exercise1 Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory11.exercise1.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab11 - Exercise2 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory11.exercise2.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab11 - Exercise2 Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory11.exercise2.Main",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
+        "name": "Lab11 - Exercise3 Snapshot Demo",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory11.exercise3.Main",
         "cwd": "${workspaceFolder}",
         "srcPaths": [
             "src"
@@ -67,6 +176,19 @@
     },
     {
         "type": "java",
+        "name": "Lab14 - Exercise1 Checker",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory14.exercise1.Checker",
+        "cwd": "${workspaceFolder}",
+        "srcPaths": [
+            "src"
+        ],
+        "classpath": [
+            "lib/java-diff-utils-4.15.jar"
+        ]
+    },
+    {
+        "type": "java",
         "name": "Lab14 - Exercise1 Main",
         "request": "launch",
         "mainClass": "com.pao.laboratory14.exercise1.Main",
@@ -89,7 +211,8 @@
             "src"
         ],
         "classpath": [
-            "lib/java-diff-utils-4.15.jar"
+            "lib/java-diff-utils-4.15.jar",
+            "src/com/pao/laboratory14/exercise2/resources"
         ]
     },
     {
@@ -103,7 +226,8 @@
             "src"
         ],
         "classpath": [
-            "lib/java-diff-utils-4.15.jar"
+            "lib/java-diff-utils-4.15.jar",
+            "src/com/pao/laboratory14/exercise2/resources"
         ]
     },
     {
