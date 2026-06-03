@@ -4,6 +4,7 @@ import com.pao.proiect.banca.model.Cont;
 import com.pao.proiect.banca.model.ExtrasCont;
 import com.pao.proiect.banca.model.IBAN;
 import com.pao.proiect.banca.model.Tranzactie;
+import com.pao.proiect.banca.service.AuditService;
 import com.pao.proiect.banca.service.TranzactieService;
 
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class TranzactieServiceImpl implements TranzactieService {
     public void inregistreaza(Tranzactie tranzactie) {
         if (tranzactie == null) throw new IllegalArgumentException("Tranzactia nu poate fi null.");
         istoric.add(tranzactie);
+        AuditService.getInstance().logAction("inregistreaza_tranzactie");
     }
 
     @Override
@@ -53,6 +55,7 @@ public class TranzactieServiceImpl implements TranzactieService {
                 rezultat.add(t);
             }
         }
+        AuditService.getInstance().logAction("listeaza_istoric_tranzactii");
         return rezultat;
     }
 
@@ -70,6 +73,7 @@ public class TranzactieServiceImpl implements TranzactieService {
             if (dataT.isBefore(start) || dataT.isAfter(end)) continue;
             tranzactiiInInterval.add(t);
         }
+        AuditService.getInstance().logAction("genereaza_extras_cont");
         return new ExtrasCont(cont, start, end, tranzactiiInInterval);
     }
 

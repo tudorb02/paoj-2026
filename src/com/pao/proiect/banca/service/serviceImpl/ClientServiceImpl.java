@@ -1,6 +1,7 @@
 package com.pao.proiect.banca.service.serviceImpl;
 
 import com.pao.proiect.banca.model.Client;
+import com.pao.proiect.banca.service.AuditService;
 import com.pao.proiect.banca.service.ClientService;
 
 import java.util.ArrayList;
@@ -37,18 +38,24 @@ public class ClientServiceImpl implements ClientService {
             return false;
         }
         clientiDupaCnp.put(client.getCnp(), client);
+        AuditService.getInstance().logAction("inregistreaza_client");
         return true;
     }
 
     @Override
     public boolean sterge(String cnp) {
         if (cnp == null) return false;
-        return clientiDupaCnp.remove(cnp) != null;
+        boolean removed = clientiDupaCnp.remove(cnp) != null;
+        if (removed) {
+            AuditService.getInstance().logAction("sterge_client");
+        }
+        return removed;
     }
 
     @Override
     public Optional<Client> cautaDupaCnp(String cnp) {
         if (cnp == null) return Optional.empty();
+        AuditService.getInstance().logAction("cauta_client_dupa_cnp");
         return Optional.ofNullable(clientiDupaCnp.get(cnp));
     }
 

@@ -4,6 +4,7 @@ import com.pao.proiect.banca.model.Card;
 import com.pao.proiect.banca.model.CardCredit;
 import com.pao.proiect.banca.model.CardDebit;
 import com.pao.proiect.banca.model.Cont;
+import com.pao.proiect.banca.service.AuditService;
 import com.pao.proiect.banca.service.CardService;
 
 import java.math.BigDecimal;
@@ -41,6 +42,7 @@ public class CardServiceImpl implements CardService {
         LocalDate expirare = LocalDate.now().plusYears(4);
         CardDebit card = new CardDebit(numar, cvv, expirare, contAtasat);
         carduriDupaNumar.put(numar, card);
+        AuditService.getInstance().logAction("emite_card");
         return card;
     }
 
@@ -52,23 +54,29 @@ public class CardServiceImpl implements CardService {
         LocalDate expirare = LocalDate.now().plusYears(4);
         CardCredit card = new CardCredit(numar, cvv, expirare, contAtasat, limitaCredit, dobandaAnuala);
         carduriDupaNumar.put(numar, card);
+        AuditService.getInstance().logAction("emite_card");
         return card;
     }
 
-    // Operatii de baza.
+
 
     @Override
     public boolean adauga(Card card) {
         if (card == null) throw new IllegalArgumentException("Cardul nu poate fi null.");
         if (carduriDupaNumar.containsKey(card.getNumarCard())) return false;
         carduriDupaNumar.put(card.getNumarCard(), card);
+        AuditService.getInstance().logAction("adauga_card");
         return true;
     }
 
     @Override
     public boolean sterge(String numarCard) {
         if (numarCard == null) return false;
-        return carduriDupaNumar.remove(numarCard) != null;
+        boolean removed = carduriDupaNumar.remove(numarCard) != null;
+        if (removed) {
+            AuditService.getInstance().logAction("sterge_card");
+        }
+        return removed;
     }
 
     @Override
@@ -91,12 +99,16 @@ public class CardServiceImpl implements CardService {
             throw new IllegalArgumentException("Nu exista niciun card cu numarul: " + numarCard);
         }
         card.setBlocat(true);
+        AuditService.getInstance().logAction("blocheaza_card");
     }
 
     @Override
     public void deblocheaza(String numarCard) {
         Card card = carduriDupaNumar.get(numarCard);
-        if (card != null) card.setBlocat(false);
+        if (card != null) {
+            card.setBlocat(false);
+            AuditService.getInstance().logAction("deblocheaza_card");
+        }
     }
 
     @Override

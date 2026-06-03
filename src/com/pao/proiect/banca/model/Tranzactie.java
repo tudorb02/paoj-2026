@@ -37,6 +37,17 @@ public class Tranzactie implements Comparable<Tranzactie> {
         this.dataOra = dataOra == null ? LocalDateTime.now() : dataOra;
     }
 
+    public Tranzactie(long id, IBAN ibanSursa, IBAN ibanDestinatie, BigDecimal suma,
+                      TipTranzactie tip, LocalDateTime dataOra) {
+        this.id = id;
+        this.ibanSursa = ibanSursa;
+        this.ibanDestinatie = ibanDestinatie;
+        this.suma = suma;
+        this.tip = tip;
+        this.dataOra = dataOra == null ? LocalDateTime.now() : dataOra;
+        ID_GEN.updateAndGet(current -> Math.max(current, id + 1));
+    }
+
     public long getId() { return id; }
     public IBAN getIbanSursa() { return ibanSursa; }
     public IBAN getIbanDestinatie() { return ibanDestinatie; }

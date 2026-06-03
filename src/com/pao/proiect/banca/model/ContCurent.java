@@ -12,6 +12,12 @@ public class ContCurent extends Cont {
         this.comisionLunar = comisionLunar == null ? BigDecimal.ZERO : comisionLunar;
     }
 
+    public ContCurent(IBAN iban, Client titular, BigDecimal soldInitial,
+                      java.time.LocalDate dataDeschidere, BigDecimal comisionLunar) {
+        super(iban, titular, soldInitial, dataDeschidere);
+        this.comisionLunar = comisionLunar == null ? BigDecimal.ZERO : comisionLunar;
+    }
+
     @Override
     public String getTipCont() {
         return "ContCurent";

@@ -5,6 +5,7 @@ import com.pao.proiect.banca.model.Cont;
 import com.pao.proiect.banca.model.IBAN;
 import com.pao.proiect.banca.model.TipTranzactie;
 import com.pao.proiect.banca.model.Tranzactie;
+import com.pao.proiect.banca.service.AuditService;
 import com.pao.proiect.banca.service.ContService;
 import com.pao.proiect.banca.service.TranzactieService;
 
@@ -44,6 +45,7 @@ public class ContServiceImpl implements ContService {
         if (cont.getTitular() != null) {
             cont.getTitular().adaugaCont(cont);
         }
+        AuditService.getInstance().logAction("deschide_cont");
         return true;
     }
 
@@ -54,12 +56,16 @@ public class ContServiceImpl implements ContService {
         if (sters != null && sters.getTitular() != null) {
             sters.getTitular().stergeCont(sters);
         }
+        if (sters != null) {
+            AuditService.getInstance().logAction("sterge_cont");
+        }
         return sters != null;
     }
 
     @Override
     public Cont cautaDupaIban(String iban) {
         if (iban == null) throw new ContInexistentException("null");
+        AuditService.getInstance().logAction("cauta_cont_dupa_iban");
         Cont cont = conturiDupaIban.get(iban);
         if (cont == null) {
             throw new ContInexistentException(iban);
@@ -106,6 +112,7 @@ public class ContServiceImpl implements ContService {
         cont.depune(suma);
         TranzactieService.getInstance().inregistreaza(
                 new Tranzactie(null, cont.getIban(), suma, TipTranzactie.DEPOZIT));
+        AuditService.getInstance().logAction("depune_bani");
     }
 
     @Override
@@ -114,6 +121,7 @@ public class ContServiceImpl implements ContService {
         cont.retrage(suma);
         TranzactieService.getInstance().inregistreaza(
                 new Tranzactie(cont.getIban(), null, suma, TipTranzactie.RETRAGERE));
+        AuditService.getInstance().logAction("retrage_bani");
     }
 
     // Daca al doilea pas esueaza, suma se intoarce in contul sursa.
@@ -132,6 +140,7 @@ public class ContServiceImpl implements ContService {
         }
         TranzactieService.getInstance().inregistreaza(
                 new Tranzactie(sursa.getIban(), destinatie.getIban(), suma, TipTranzactie.TRANSFER));
+        AuditService.getInstance().logAction("transfera_bani");
     }
 
     @Override

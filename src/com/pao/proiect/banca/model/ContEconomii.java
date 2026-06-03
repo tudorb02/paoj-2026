@@ -13,6 +13,12 @@ public class ContEconomii extends Cont {
         this.dobandaAnuala = dobandaAnuala == null ? BigDecimal.ZERO : dobandaAnuala;
     }
 
+    public ContEconomii(IBAN iban, Client titular, BigDecimal soldInitial,
+                        java.time.LocalDate dataDeschidere, BigDecimal dobandaAnuala) {
+        super(iban, titular, soldInitial, dataDeschidere);
+        this.dobandaAnuala = dobandaAnuala == null ? BigDecimal.ZERO : dobandaAnuala;
+    }
+
     @Override
     public String getTipCont() {
         return "ContEconomii";

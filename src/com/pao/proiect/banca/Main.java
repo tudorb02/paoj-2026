@@ -1,9 +1,12 @@
 package com.pao.proiect.banca;
 
+import com.pao.proiect.banca.config.DatabaseConnection;
+import com.pao.proiect.banca.config.DatabaseInitializer;
 import com.pao.proiect.banca.exception.CardBlocatException;
 import com.pao.proiect.banca.exception.ContInexistentException;
 import com.pao.proiect.banca.exception.FonduriInsuficienteException;
 import com.pao.proiect.banca.exception.IBANInvalidException;
+import com.pao.proiect.banca.model.Card;
 import com.pao.proiect.banca.model.CardCredit;
 import com.pao.proiect.banca.model.CardDebit;
 import com.pao.proiect.banca.model.Client;
@@ -13,9 +16,16 @@ import com.pao.proiect.banca.model.ContEconomii;
 import com.pao.proiect.banca.model.ExtrasCont;
 import com.pao.proiect.banca.model.IBAN;
 import com.pao.proiect.banca.model.Tranzactie;
+import com.pao.proiect.banca.repository.CardRepository;
+import com.pao.proiect.banca.repository.ClientRepository;
+import com.pao.proiect.banca.repository.ContRepository;
+import com.pao.proiect.banca.repository.RaportRepository;
+import com.pao.proiect.banca.repository.TranzactieRepository;
+import com.pao.proiect.banca.service.AuditService;
 import com.pao.proiect.banca.service.CardService;
 import com.pao.proiect.banca.service.ClientService;
 import com.pao.proiect.banca.service.ContService;
+import com.pao.proiect.banca.service.JdbcTransferService;
 import com.pao.proiect.banca.service.TranzactieService;
 
 import java.math.BigDecimal;
@@ -137,7 +147,7 @@ public class Main {
             System.out.println("  -> exceptie capturata: " + e.getMessage());
         }
 
-        // Cateva verificari in plus pentru exceptii si rapoarte.
+
         header("Demonstratii suplimentare");
 
         try {
@@ -159,7 +169,87 @@ public class Main {
         cardService.listeazaCarduriCont(contMaria.getIban().getValoare())
                 .forEach(c -> System.out.println("     " + c));
 
+        demonstreazaEtapaII(
+                ion,
+                maria,
+                List.of(contIon, contEconomiiIon, contMaria),
+                List.of(cardDebitIon, cardCreditMaria),
+                tranzactieService);
+
         System.out.println("\n=== END ===");
+    }
+
+    private static void demonstreazaEtapaII(Client ion,
+                                           Client maria,
+                                           List<Cont> conturi,
+                                           List<Card> carduri,
+                                           TranzactieService tranzactieService) {
+        header("Demonstratie Etapa II - JDBC, tranzactii, JOIN-uri si audit");
+
+        DatabaseInitializer.getInstance().resetDatabase();
+        ClientRepository clientRepository = new ClientRepository();
+        ContRepository contRepository = new ContRepository();
+        CardRepository cardRepository = new CardRepository();
+        TranzactieRepository tranzactieRepository = new TranzactieRepository();
+        RaportRepository raportRepository = new RaportRepository();
+
+        clientRepository.save(ion);
+        clientRepository.save(maria);
+        for (Cont cont : conturi) {
+            contRepository.save(cont);
+        }
+        for (Card card : carduri) {
+            cardRepository.save(card);
+        }
+        for (Tranzactie tranzactie : tranzactieService.listeazaToate()) {
+            tranzactieRepository.save(tranzactie);
+        }
+
+        System.out.println("  -> baza de date folosita: " + DatabaseConnection.getInstance().getDatabaseUrl());
+        System.out.println("  -> clienti salvati in DB: " + clientRepository.findAll().size());
+        System.out.println("  -> conturi salvate in DB: " + contRepository.findAll().size());
+        System.out.println("  -> carduri salvate in DB: " + cardRepository.findAll().size());
+        System.out.println("  -> tranzactii salvate in DB: " + tranzactieRepository.findAll().size());
+
+        maria.setTelefon("0730000000");
+        clientRepository.update(maria);
+        String telefonMaria = clientRepository.findById(maria.getCnp())
+                .map(Client::getTelefon)
+                .orElse("-");
+        System.out.println("  -> CRUD update client: telefon Maria in DB = " + telefonMaria);
+
+        Client clientTemporar = new Client("Temporar", "Stergere", "1990101220011",
+                "temp@example.com", "0700000000");
+        clientRepository.save(clientTemporar);
+        System.out.println("  -> CRUD save/find client temporar: "
+                + clientRepository.findById(clientTemporar.getCnp()).isPresent());
+        clientRepository.delete(clientTemporar.getCnp());
+        System.out.println("  -> CRUD delete client temporar: "
+                + clientRepository.findById(clientTemporar.getCnp()).isEmpty());
+
+        JdbcTransferService jdbcTransferService = new JdbcTransferService();
+        String ibanSursa = conturi.get(1).getIban().getValoare();
+        String ibanDestinatie = conturi.get(2).getIban().getValoare();
+        jdbcTransferService.transferaCuTranzactie(ibanSursa, ibanDestinatie, new BigDecimal("100.00"));
+        System.out.println("  -> transfer JDBC cu commit intre " + ibanSursa + " si " + ibanDestinatie);
+        System.out.println("     sold sursa in DB      : "
+                + contRepository.findById(ibanSursa).map(Cont::getSold).orElse(BigDecimal.ZERO));
+        System.out.println("     sold destinatie in DB : "
+                + contRepository.findById(ibanDestinatie).map(Cont::getSold).orElse(BigDecimal.ZERO));
+
+        System.out.println("  -> JOIN 1: clienti + numar conturi + sold total");
+        raportRepository.clientiCuNumarConturiSiSoldTotal()
+                .forEach(r -> System.out.println("     " + r));
+
+        System.out.println("  -> JOIN 2: conturi + titular + numar carduri");
+        raportRepository.conturiCuTitularSiNumarCarduri()
+                .forEach(r -> System.out.println("     " + r));
+
+        System.out.println("  -> JOIN 3: tranzactii + titular sursa/destinatie");
+        raportRepository.tranzactiiCuTitulari()
+                .forEach(r -> System.out.println("     " + r));
+
+        System.out.println("  -> audit CSV: " + AuditService.getInstance().getAuditPath());
     }
 
     private static void header(String text) {
