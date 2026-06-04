@@ -118,6 +118,31 @@ java -cp "out:lib/*" com.pao.proiect.banca.Main
 
 In IntelliJ IDEA exista configuratia de rulare `Proiect Banca Main`.
 
+### 3.1 Cum rulezi checker-ul proiectului
+
+Checker-ul proiectului verifica automat schema, conexiunea JDBC, CRUD-ul pentru 4 repository-uri,
+tranzactia JDBC explicita, cele 3 query-uri cu JOIN si auditul CSV.
+
+Din radacina proiectului:
+
+```bash
+javac -cp "lib/*" -d out $(find src/com/pao/proiect/banca -name "*.java")
+java -cp "out:lib/*" com.pao.proiect.banca.Checker
+```
+
+Rezultatul asteptat:
+
+```text
+[PASS] schema.sql + DatabaseConnection
+[PASS] CRUD save/findAll pentru 4 repository-uri
+[PASS] CRUD update/delete
+[PASS] tranzactie JDBC explicita cu commit
+[PASS] 3 query-uri JOIN
+[PASS] AuditService CSV thread-safe
+
+TOTAL: 6/6 verificari trecute
+```
+
 ## 4. Cum se mapeaza cerintele pe cod
 
 | Cerinta | Unde e implementata |
