@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Lab06 exercise3 Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.pao.laboratory06.exercise3.Main" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <module name="laboratoare" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Lab13 exercise2 Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.pao.laboratory13.exercise2.Main" />
+    <option name="PROGRAM_PARAMETERS" value="9013" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <module name="laboratoare" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

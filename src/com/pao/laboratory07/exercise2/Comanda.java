@@ -1,0 +1,19 @@
+package com.pao.laboratory07.exercise2;
+
+import com.pao.laboratory07.exercise1.OrderState;
+
+public abstract sealed class Comanda permits ComandaStandard, ComandaRedusa, ComandaGratuita {
+    protected String nume;
+    protected double pret;
+    protected OrderState state;
+
+    public Comanda(String nume, double pret) {
+        this.nume = nume;
+        this.pret = pret;
+        this.state = OrderState.PLACED;
+    }
+
+    public abstract double pretFinal();
+
+    public abstract String descriere();
+}

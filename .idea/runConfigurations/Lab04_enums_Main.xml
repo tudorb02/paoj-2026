@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Lab04 enums Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.pao.laboratory04.enums.Main" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <module name="laboratoare" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

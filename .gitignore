@@ -18,8 +18,16 @@ output/
 *.class
 
 # project settings
-.idea
+.idea/*
+!.idea/
+!.idea/misc.xml
+!.idea/modules.xml
+!.idea/runConfigurations/
+!.idea/runConfigurations/*.xml
 *.iml
+!laboratoare.iml
+bank.db
+audit.csv
 
 ### IntelliJ IDEA ###
 out/
